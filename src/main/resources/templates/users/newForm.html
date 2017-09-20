@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+
+	<head>
+	<meta charset="UTF-8">
+		<title>User Management</title>
+	</head>
+	
+	<body>
+	Welcome, {{ currentUser.firstName }} ({{ currentUser.email }})
+
+	<h2>You're really awesome</h2>
+	<p>{{ bodyPart }}</p>
+	<p>{{#queryLastName}}{{ . }}{{/queryLastName}}</p>
+	
+	<form method="post" action="/handlePost">
+		<input type="text" name="firstName" placeholder="firstName" required>
+		<input type="text" name="lastName" placeholder="lastName" required>
+		<input type="text" name="email" placeholder="emil" required>
+		<input type="text" name="password" placeholder="password" required>
+		<button>Create User</button>
+	</form>
+	
+	</body>
+</html>
