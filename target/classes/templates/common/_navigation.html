@@ -1,0 +1,28 @@
+<!-- This is _navigation.html -->
+<div>
+   	<a href="/">Home</a>
+{{#currentUser}}
+    	there is a currentUser
+    	<br>
+    	<br>
+      	Welcome, {{ currentUser.firstName }} ({{ currentUser.email }})
+      	<br>
+		<br>
+		<a href="/apartments/mine">Your Listings</a>
+		<br>
+		<a href="/apartments/new">Add A Listing</a>
+		<br>
+		<form action="/logout" method="post">
+      	<br>
+		<button>Logout</button>
+      	<input type="hidden" name="{{ _csrf.parameterName }}" value="{{ _csrf.token }}">
+   		</form>
+{{/currentUser}}
+
+{{#noUser}}
+		no current user
+		<a href="/login">Login</a>
+		<a href="/users/new">Sign up</a>
+{{/noUser}}
+
+</div>

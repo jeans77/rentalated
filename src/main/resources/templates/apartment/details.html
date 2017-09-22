@@ -3,20 +3,24 @@
 
 	<head>
 	<meta charset="UTF-8">
-		<title>Your Next Home Details</title>
+		<title>Your Next Home Details(apartment/details)</title>
 	</head>
 	
 	<body>
+-------> This is apartment/details
+
+{{> /common/_navigation }}
+	
 	<h1>Only ${{ apartment.rent }}</h1>
 	<p>
 		{{ apartment.address }}, {{ apartment.city }}, {{ apartment.state }} {{ apartment.zipCode }}
 	</p>
 	<dl>
-  		<dt>Bedrooms</dt>
+  		<dt># of Bedrooms</dt>
   		<dd>{{ apartment.numberOfBedrooms }}</dd>
-  		<dt>Bathrooms</dt>
+  		<dt># of Bathrooms</dt>
 		<dd>{{ apartment.numberOfBathrooms }}</dd>
-  		<dt>SQ footage</dt>
+  		<dt>SQ Footage</dt>
   		<dd>{{ apartment.squareFootage }}</dd>
   	</dl>
 	

@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+
+	<head>
+	<meta charset="UTF-8">
+		<title>Welcome To Your New Apartment</title>
+	</head>
+	
+	<body>
+	
+	{{> common/_navigation }}
+
+	{{#noUser}}
+		<a href="/login">Login</a>
+		<a href="/users/new">SignUp</a>
+	{{/noUser}}
+	
+
+	{{#currentUser}}
+		<br>
+		<a href="/logout">Logout</a>
+		<br>
+		<a href="/apartments/new">Add A Listing</a>
+		<br>
+		<br>
+		Welcome, {{ currentUser.firstName }} ({{ currentUser.email }})
+		<br>
+		<a href="/apartments/mine">Your Listing</a>
+	{{/currentUser}}
+	
+	<h1>Apartments</h1>
+	
+	{{#apartments}}
+		<div>
+		<p>This is index2<p>
+		<a href="/apartments/{{ id }}">{{ address }}</a>
+		</div>
+	{{/apartments}}
+	
+
+	</body>
+	</html>

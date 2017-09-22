@@ -1,23 +1,29 @@
 <!doctype html>
 <html>
-
 	<head>
 	<meta charset="UTF-8">
-		<title>User Management</title>
+		<title>New User Form(users/newForm)</title>
 	</head>
-	
 	<body>
-	Welcome, {{ currentUser.firstName }} ({{ currentUser.email }})
-
-	<h2>You're really awesome</h2>
+-------> This is users/newForm	
+{{> /common/_navigation }}
+	
+	<h2>Enter your Credentials</h2>
+	
 	<p>{{ bodyPart }}</p>
+	
 	<p>{{#queryLastName}}{{ . }}{{/queryLastName}}</p>
 	
-	<form method="post" action="/handlePost">
-		<input type="text" name="firstName" placeholder="firstName" required>
-		<input type="text" name="lastName" placeholder="lastName" required>
-		<input type="text" name="email" placeholder="emil" required>
-		<input type="text" name="password" placeholder="password" required>
+	<form method="post" action="/login">
+		<input type="text" name="first_name" placeholder="firstName" required><br>
+		<input type="text" name="last_name" placeholder="lastName" required><br>
+		<input type="text" name="email" placeholder="email" required><br>
+		<input type="text" name="password" placeholder="password" required><br>
+		
+		<input type="hidden" name="returnPath", value="{{ returnPath }}">
+ 		<input type = "hidden" name ="csrf" value="{{ csrf }}">
+ 		
+ 		<br>
 		<button>Create User</button>
 	</form>
 	
