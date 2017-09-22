@@ -1,9 +1,8 @@
 <!doctype html>
 <html>
-
 	<head>
 	<meta charset="UTF-8">
-		<title>Welcome Your Apartment(apartment/usersListings)</title>
+		<title>Welcome To Your Apartments(apartment/usersListings)</title>
 	</head>
 	
 	<body>
@@ -14,31 +13,25 @@
   		<div>{{ errorMessage }}</div>
 	{{/errorMessage}}
 	
+	<h1>Your Listings</h1>
 	
-	<h1>Your Listing</h1>
-	<h2>Active Listing</h2> 
+		<h2>Active Listings</h2> 
+			{{#myActiveListings}}
+			<ul>
+				<li>
+					<a href="/apartments/{{ id }}">{{ address }}</a>
+				</li>
+			</ul>
+			{{/myActiveListings}}
 	
-	<a href="/apartments/new">List New Apartment</a>
 	
-	{{#activeListings}}
-		<a href="/login">Login</a>
-	{{/activeListings}}
-	
-	{{#currentUser}}
-	
-		Welcome, {{ currentUser.firstName }} ({{ currentUser.email }})
-		<a href="/apartments/mine">My listings</a>
-		
-	{{/currentUser}}
-	
-	<h1>Apartments</h1>
-	
-	{{#apartments}}
-		<div>
-		<a href="/apartments/{{ id }}">{{ address }}</a>
-		</div>
-	{{/apartments}}
-	
-
+		<h2>Inactive Listing</h2> 
+			{{#myInactiveListings}}
+			<ul>
+				<li>
+					<a href="/apartments/{{ id }}">{{ address }}</a>
+				</li>
+			</ul>
+			{{/myInactiveListings}}
 	</body>
-	</html>
+</html>

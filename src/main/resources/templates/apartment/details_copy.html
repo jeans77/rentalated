@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+
+	<head>
+	<meta charset="UTF-8">
+		<title>Your Next Home Details(apartment/details)</title>
+	</head>
+	
+	<body>
+-------> This is apartment/details
+
+{{> /common/_navigation }}
+	
+	<h1>Only ${{ apartment.rent }}</h1>
+	<p>
+		{{ apartment.address }}, {{ apartment.city }}, {{ apartment.state }} {{ apartment.zipCode }}
+	</p>
+	<dl>
+  		<dt># of Bedrooms</dt>
+  		<dd>{{ apartment.numberOfBedrooms }}</dd>
+  		<dt># of Bathrooms</dt>
+		<dd>{{ apartment.numberOfBathrooms }}</dd>
+  		<dt>SQ Footage</dt>
+  		<dd>{{ apartment.squareFootage }}</dd>
+  	</dl>
+	
+		<#if !currentUser??>
+			<a href="/login?returnPath=/apartments/${apartment.id}">Login to LIKE this apartment</a>
+		<#elseif apartment.user != currentUser && numberOfCurrentUserLikes == 0>
+			<form method="post" action="/apartments/${apartment.id}/like">
+				<button>Like this apartment</button>
+				<input type="hidden" name="csrf" value="${csrf_token}">
+			</form>
+		<#elseif apartment.user != currentUser>
+			<p>Likes: ${numberOfLikes}</p>
+		<#else>
+			<p>Likes:</p>
+			<#if numberOfLikes != 0>
+				<ul>
+				<#list usersThatLikedApartment as liker>
+					<li>${liker.lastName}, ${liker.firstName}</li>
+				</#list>
+				</ul>
+			<#else>
+				<p>None :(</p>
+			</#if>
+		</#if>
+		
+		<#if apartment.user == currentUser && apartment.isActive>
+			<form method="post" action="/apartments/${apartment.id}/deactivations">
+				<input type="hidden" name="activationStatus" value="false">
+				<button>Deativate listing</button>
+				<input type="hidden" name="csrf" value="${csrf_token}">
+			</form>
+		<#elseif apartment.user == currentUser>
+			<form method="post" action="/apartments/${apartment.id}/activations">
+				<input type="hidden" name="activationStatus" value="true">
+				<button>Activate listing</button>
+				<input type="hidden" name="csrf" value="${csrf_token}">
+			</form>
+		</#if>
+	
+	</body>
+</html>

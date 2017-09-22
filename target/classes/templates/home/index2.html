@@ -1,22 +1,27 @@
 <!doctype html>
 <html>
 
-	<head>
+<head>
 	<meta charset="UTF-8">
-		<title>Welcome To Your New Apartment</title>
-	</head>
+	<title>Welcome To Your New Apartment(home/index)</title>
+</head>
 	
-	<body>
-	
-	{{> common/_navigation }}
+<body>
+-------> This is home/index
+{{> /common/_navigation }}
 
-	{{#noUser}}
-		<a href="/login">Login</a>
-		<a href="/users/new">SignUp</a>
-	{{/noUser}}
-	
+<h1>Apartments!(home/Index)</h1>
 
-	{{#currentUser}}
+<br>
+<br>
+
+{{#apartments}}
+	<div>
+		<a href="/apartments/{{ id }}">{{ address }}</a>
+	</div>
+{{/apartments}}
+		
+{{#currentUser}}
 		<br>
 		<a href="/logout">Logout</a>
 		<br>
@@ -26,17 +31,11 @@
 		Welcome, {{ currentUser.firstName }} ({{ currentUser.email }})
 		<br>
 		<a href="/apartments/mine">Your Listing</a>
-	{{/currentUser}}
-	
-	<h1>Apartments</h1>
-	
-	{{#apartments}}
-		<div>
-		<p>This is index2<p>
-		<a href="/apartments/{{ id }}">{{ address }}</a>
-		</div>
-	{{/apartments}}
-	
+{{/currentUser}}
 
-	</body>
-	</html>
+{{#noUser}}
+
+{{/noUser}}
+
+</body>
+</html>

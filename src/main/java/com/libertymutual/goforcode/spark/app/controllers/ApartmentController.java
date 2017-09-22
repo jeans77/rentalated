@@ -70,20 +70,33 @@ public class ApartmentController {
 	};
 
 	public static final Route index = (Request req, Response res) -> {
-		User currentUser = req.session().attribute("currentUser");
-		long id = (int) currentUser.getId();
+		
+
+		long id = -1;
+		
+		User user = req.session().attribute("currentUser");
+		if (user != null) {
+			id = (long) user.getId();
+		}
+		System.out.println("Apt-Ctl-Idx id: " + id);
+		
 		
 		try (AutoCloseableDb db = new AutoCloseableDb()) {
-//			List<Apartment> apartments = Apartment.where("user_id = ?", id);
-			List<Apartment> activeApartments = Apartment.where("user_id = ? and is_active = ?", id, true);
-			List<Apartment> inactiveApartments = Apartment.where("user_id = ? and is_active = ?", id, false);
+			List<Apartment> myListings = Apartment.where("user_id = ?", id);
+			List<Apartment> myActiveListings = Apartment.where("user_id = ? and is_active = ?", id, true);
+			List<Apartment> myInactiveListings = Apartment.where("user_id = ? and is_active = ?", id, false);
 // or			List<Apartment> apartments = currentUser.getAll(Apartment.class);
 // or			Apartment.where("user_id = + id);
 			Map<String, Object> model = new HashMap<String, Object>();
 //			model.put("apartments", apartments);
-			model.put("activeApartments", activeApartments);
-			model.put("inactiveApartments", inactiveApartments);
-			return MustacheRenderer.getInstance().render("apartment/index.html", model);
+
+			System.out.println("MyListings: " + myListings);
+			System.out.println("MyActiveListings: " + myActiveListings);
+			System.out.println("MyInactiveListings: " + myInactiveListings);
+			
+			model.put("myActiveListings", myActiveListings);
+			model.put("myInactiveListings", myInactiveListings);
+			return MustacheRenderer.getInstance().render("apartment/usersListings.html", model);
 
 		}
 		

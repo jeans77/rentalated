@@ -18,12 +18,13 @@ public class SeedApp {
 		Apartment.deleteAll();
 		ApartmentsUsers.deleteAll();
 
-		User user = new User("jean@lm.com", encrytedPassword, "Jean", "S");
-		user.saveIt();
-			user = new User("irma@ibm.com", encrytedPassword, "Irma", "Maria");
-		user.saveIt();
+		User user = new User("I@ibm.com", encrytedPassword, "I", "IBM");
+				user.saveIt();
 		
-		Apartment apartment = new Apartment(300, 1, 1.0, 350, "111 Main Str1", "San Francisco", "CA", 95101, false);
+			user = new User("jean@lm.com", encrytedPassword, "Jean", "S");
+				user.saveIt();
+		
+		Apartment apartment = new Apartment(300, 1, 1.0, 350, "111 Main Str1", "San Francisco", "CA", 95101, true);
 				user.add(apartment);
 				apartment.saveIt();
 		
