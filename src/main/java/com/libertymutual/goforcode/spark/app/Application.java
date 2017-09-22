@@ -2,93 +2,72 @@ package com.libertymutual.goforcode.spark.app;
 
 import static spark.Spark.*;
 
-import java.io.StringWriter;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.javalite.activejdbc.Base;
-import org.mindrot.jbcrypt.BCrypt;
-
-import com.github.mustachejava.DefaultMustacheFactory;
-import com.github.mustachejava.Mustache;
+import com.libertymutual.goforcode.spark.app.controllers.ActivateController;
 import com.libertymutual.goforcode.spark.app.controllers.ApartmentApiController;
 import com.libertymutual.goforcode.spark.app.controllers.ApartmentController;
 import com.libertymutual.goforcode.spark.app.controllers.HomeController;
+import com.libertymutual.goforcode.spark.app.controllers.LikeController;
 import com.libertymutual.goforcode.spark.app.controllers.SessionController;
+import com.libertymutual.goforcode.spark.app.controllers.UserApiController;
 import com.libertymutual.goforcode.spark.app.controllers.UserController;
 import com.libertymutual.goforcode.spark.app.filters.SecurityFilters;
-import com.libertymutual.goforcode.spark.app.models.Apartment;
-import com.libertymutual.goforcode.spark.app.models.User;
-import com.libertymutual.goforcode.spark.app.utilities.AutoCloseableDb;
-import com.libertymutual.goforcode.spark.app.utilities.MustacheRenderer;
 
-import spark.Request;
-import spark.Response;
+import com.libertymutual.goforcode.spark.app.utilities.SeedApp;
 
 public class Application {
 
 	public static void main(String[] args) {
-
-		String encryptedPassword = BCrypt.hashpw("password", BCrypt.gensalt());
-		try (AutoCloseableDb db = new AutoCloseableDb()) {
-			User.deleteAll();
-			User curtis = new User("curtis@tir.com", encryptedPassword, "Curtis", "S");
-			curtis.saveIt();
-			User jean = new User("jean@lm.com", encryptedPassword, "Jean", "S");
-			jean.saveIt();
-			User irma = new User("irma@hm.com", encryptedPassword, "Irma", "M");
-			irma.saveIt();
-			
-			Apartment.deleteAll();
-
-			Apartment apartment1 = new Apartment(300, 1, 1, 350, "111 Main Str1", "San Francisco", "CA", "95101",1, false);
-			apartment1.saveIt();
-			curtis.add(apartment1);
-			
-			Apartment apartment2 = new Apartment(400, 2, 2, 450, "222 Main Str2", "San Francisco", "CA", "95102",2, false);
-			apartment2.saveIt();
-			jean.add(apartment2);
-			
-			Apartment apartment3 = new Apartment(500, 3, 3, 550, "333 Main Str3", "San Francisco", "CA", "95103",3, false);
-			apartment3.saveIt();
-			jean.add(apartment3);
-		}
+		SeedApp.create();
 		
-		path("/apartments", () -> {
-
-			before("/new", SecurityFilters.isAuthenticated);
-			get("/new", 	ApartmentController.newForm);
-			
-			before ("/mine, SecurityFilters.isAuthenticated");
-			get("/mine",    ApartmentController.index);
-			
-			get("/:id", 	ApartmentController.details);
-			
-			before("", SecurityFilters.isAuthenticated);
-			post("",        ApartmentController.create);
-		});
-		
+		before("/*", 			SecurityFilters.checkIfSessionIsNew);
 		get("/", 				HomeController.index);
-		
 		get("/login",			SessionController.newForm);
-//		get("/logout", 			SessionController.destroy);
+		before("/login", 		SecurityFilters.checkSubmittedCsrfToken);
 		post("/logout", 		SessionController.destroy);
 		post("/login",			SessionController.create);
 		
-		
+	path("/users", () -> {
 		get("/signup",			UserController.newForm);
 		get("/users/new",		UserController.newForm);
+		get("/new", 			UserController.newForm);
 		post("/users",			UserController.create);
+		before("", 				SecurityFilters.checkSubmittedCsrfToken);
+		post("", 				UserController.create);
+	});
 		
-		get("/signup",			ApartmentController.newForm);
-		get("/users/new",		ApartmentController.details);
-		post("/users",			ApartmentController.create);
-		post("/users",			ApartmentController.index);
+	path("/apartments", () -> {
+		get("/new", 			ApartmentController.newForm);
 		
+		before("", 				SecurityFilters.checkSubmittedCsrfToken);
+		before("", 				SecurityFilters.isAuthenticated);
+		post("", 				ApartmentController.create);
 		
-		path("/api", () -> {
-			get("/apartments/:id", 	ApartmentApiController.details);
-			post("/apartments", 	ApartmentApiController.create);
-		});
+		get("/mine",    		ApartmentController.index);	
+		get("/:id", 			ApartmentController.details);
+		
+		before("/:id/like", 	SecurityFilters.checkSubmittedCsrfToken);
+		before("/:id/like", 	SecurityFilters.isAuthenticated);
+		post("/:id/like", 		LikeController.create);
+		
+		before("/:id/deactivations", SecurityFilters.checkSubmittedCsrfToken);
+		before("/:id/deactivations", SecurityFilters.isAuthenticated);
+		post("/:id/deactivations", 	ActivateController.update);
+		
+		before("/:id/activations", 	SecurityFilters.checkSubmittedCsrfToken);
+		before("/:id/activations", 	SecurityFilters.isAuthenticated);
+		post("/:id/activations", 	ActivateController.update);
+
+	});	
+		
+	path("/api", () -> {
+		get("/apartments/:id", 		ApartmentApiController.details);
+		before("/apartments", 		SecurityFilters.checkSubmittedCsrfToken);
+//		before("/apartments", 		SecurityFilters.isAuthenticated);
+		post("/apartments", 		ApartmentApiController.create);
+		get("/users/:id", 			UserApiController.details);
+		before("/apartments", 		SecurityFilters.checkSubmittedCsrfToken);
+		post("/users", 				UserApiController.create);
+	});
+	
 	}
 }

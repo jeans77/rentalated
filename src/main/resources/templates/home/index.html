@@ -11,20 +11,19 @@
 {{> /common/_navigation }}
 
 <h1>Apartments!(home/Index)</h1>
-Connected:, {{ currentUser.firstName }} ({{ currentUser.email }})
+Connected {{ currentUser.firstName }} ({{ currentUser.email }})
 <br>
 <br>
-</body>
 
-
-		{{#apartments}}
-			<div>
-				<a href="/apartments/{{ id }}">{{ address }}</a>
-			</div>
-		{{/apartments}}
+{{#apartments}}
+	<div>
+		<a href="/apartments/{{ id }}">{{ address }}</a>
+	</div>
+{{/apartments}}
 		
 {{#currentUser}}
 
 {{/currentUser}}
 
+</body>
 </html>

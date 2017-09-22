@@ -8,6 +8,8 @@ import static spark.Spark.notFound;
 
 import java.util.Map;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -35,11 +37,13 @@ public class UserApiController {
 		Map map = JsonHelper.toMap(json);
 		User user = new User();
 		user.fromMap(map);
+		user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
 		
 		try (AutoCloseableDb db = new AutoCloseableDb()) {
 			user.saveIt();
 			res.status(201);
-			return user.toJson(true);
+
 		}
+		return user.toJson(true);
 	};
 }

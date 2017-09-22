@@ -2,13 +2,16 @@ C:\Users\n0176384\dev\rentalated\src\main\java\com\libertymutual\goforcode\spark
 C:\Users\n0176384\dev\rentalated\src\main\java\com\libertymutual\goforcode\spark\app\controllers\UserController.java
 C:\Users\n0176384\dev\rentalated\src\main\java\com\libertymutual\goforcode\spark\app\models\User.java
 C:\Users\n0176384\dev\rentalated\src\main\java\com\libertymutual\goforcode\spark\app\models\Apartment.java
-C:\Users\n0176384\dev\rentalated\src\main\java\com\libertymutual\goforcode\spark\app\utilities\VelocityTemplateEngine.java
 C:\Users\n0176384\dev\rentalated\src\main\java\com\libertymutual\goforcode\spark\app\controllers\ApartmentController.java
 C:\Users\n0176384\dev\rentalated\src\main\java\com\libertymutual\goforcode\spark\app\filters\SecurityFilters.java
+C:\Users\n0176384\dev\rentalated\src\main\java\com\libertymutual\goforcode\spark\app\utilities\SeedApp.java
 C:\Users\n0176384\dev\rentalated\src\main\java\com\libertymutual\goforcode\spark\app\controllers\HomeController.java
 C:\Users\n0176384\dev\rentalated\src\main\java\com\libertymutual\goforcode\spark\app\utilities\AutoCloseableDb.java
 C:\Users\n0176384\dev\rentalated\src\main\java\com\libertymutual\goforcode\spark\app\utilities\MustacheRenderer.java
+C:\Users\n0176384\dev\rentalated\src\main\java\com\libertymutual\goforcode\spark\app\controllers\ActivateController.java
+C:\Users\n0176384\dev\rentalated\src\main\java\com\libertymutual\goforcode\spark\app\controllers\LikeController.java
 C:\Users\n0176384\dev\rentalated\src\main\java\com\libertymutual\goforcode\spark\app\controllers\UserApiController.java
+C:\Users\n0176384\dev\rentalated\src\main\java\com\libertymutual\goforcode\spark\app\models\ApartmentsUsers.java
 C:\Users\n0176384\dev\rentalated\src\main\java\com\libertymutual\goforcode\spark\app\controllers\SessionController.java
 C:\Users\n0176384\dev\rentalated\src\main\java\com\libertymutual\goforcode\spark\app\utilities\JsonHelper.java
 C:\Users\n0176384\dev\rentalated\src\main\java\com\libertymutual\goforcode\spark\app\Application.java

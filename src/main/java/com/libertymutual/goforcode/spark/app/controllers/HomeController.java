@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.velocity.VelocityContext;
-
 import com.libertymutual.goforcode.spark.app.models.Apartment;
 import com.libertymutual.goforcode.spark.app.utilities.AutoCloseableDb;
 import com.libertymutual.goforcode.spark.app.utilities.MustacheRenderer;

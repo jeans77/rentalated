@@ -3,7 +3,6 @@ package com.libertymutual.goforcode.spark.app.controllers;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.javalite.activejdbc.Base;
 import org.mindrot.jbcrypt.BCrypt;
 
 import com.libertymutual.goforcode.spark.app.models.User;

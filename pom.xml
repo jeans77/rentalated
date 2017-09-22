@@ -3,7 +3,7 @@
   <groupId>com.theironyard.spark.app</groupId>
   <artifactId>com.theironyard.spark.app</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>collarbone</name>
+  <name>rentalated</name>
   <description>This is a pretend project.</description>
   
   <dependencies>
