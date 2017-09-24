@@ -30,5 +30,21 @@ public class HomeController {
 		
 		}
 	};
+	
+	public static final Route index2 = (Request req, Response res) -> {
+
+		try (AutoCloseableDb db = new AutoCloseableDb()){
+	
+		List<Apartment> apartments = Apartment.findAll();
+		Map<String, Object> model = new HashMap<String, Object>();
+		model.put("apartments", apartments);
+		model.put("currentUser", req.session().attribute("currentUser"));
+		model.put("noUser", req.session().attribute("currentUser") == null);
+		System.out.println("Current : " + (req.session().attribute("currentUser")));
+		System.out.println("noUser  : " + (req.session().attribute("currentUser") == null));
+		return MustacheRenderer.getInstance().render("home/index.html", model);
+		
+		}
+	};
 }
 

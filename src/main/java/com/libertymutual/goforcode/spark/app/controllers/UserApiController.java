@@ -1,5 +1,6 @@
 package com.libertymutual.goforcode.spark.app.controllers;
 
+import com.libertymutual.goforcode.spark.app.models.Apartment;
 import com.libertymutual.goforcode.spark.app.models.User;
 import com.libertymutual.goforcode.spark.app.utilities.AutoCloseableDb;
 import com.libertymutual.goforcode.spark.app.utilities.JsonHelper;
@@ -22,10 +23,11 @@ public class UserApiController {
 			String idAsString =  req.params("id");
 			int id = Integer.parseInt(idAsString);
 			User user = User.findById(id);
+//			Apartment apartment = Apartment.findById(id);
+			
 			if (user != null) {
 				res.header("Content-Type", "application/json");
 				return user.toJson(true);
-				
 			}
 			notFound("Did not find that user");
 			return "";

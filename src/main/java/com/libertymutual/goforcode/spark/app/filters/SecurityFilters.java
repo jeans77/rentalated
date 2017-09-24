@@ -11,6 +11,10 @@ import spark.Response;
 public class SecurityFilters {
 	public static Filter isAuthenticated = (Request req, Response res) -> {
 		if (req.session().attribute("currentUser") == null) {
+			if (req.pathInfo().equals("/apartments/mine")) {
+				res.redirect("/login");
+				halt();
+			}
 			res.redirect("/login?returnPath=" + req.pathInfo());
 			halt();
 		}	
@@ -23,6 +27,16 @@ public class SecurityFilters {
 		}
 	};
 		
+	private static UUID newCSRF() {
+		UUID newCSRF = UUID.randomUUID();
+		return newCSRF;
+	}
+	
+	public static UUID getNewCSRF() {
+		return newCSRF();
+	}
+	
+	
 	public static final Filter checkSubmittedCsrfToken = (Request req, Response res) -> {
 		if (req.requestMethod() == "POST") {
 			String serverToken = req.session().attribute("csrf_token");

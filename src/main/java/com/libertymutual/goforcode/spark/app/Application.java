@@ -18,36 +18,39 @@ public class Application {
 
 	public static void main(String[] args) {
 		SeedApp.create();
+		get("/", HomeController.index2);
 		
 //		before("/*", 			SecurityFilters.checkIfSessionIsNew);
-		get("/", 				HomeController.index);
+//		get("/", 				HomeController.index);
 		get("/login",			SessionController.newForm);
 //		before("/login", 		SecurityFilters.checkSubmittedCsrfToken);
-		post("/logout", 		SessionController.destroy);
 		post("/login",			SessionController.create);
+		post("/logout", 		SessionController.destroy);
 		
 	path("/users", () -> {
 		get("/signup",			UserController.newForm);
-		get("/users/new",		UserController.newForm);
 		get("/new", 			UserController.newForm);
-		post("/users",			UserController.create);
-//		before("", 				SecurityFilters.checkSubmittedCsrfToken);
-		post("", 				UserController.create);
+//		before("new", 			SecurityFilters.checkSubmittedCsrfToken);
+		post("/new", 			UserController.create);
 	});
 		
 	path("/apartments", () -> {
+		
+//		before("new", 			SecurityFilters.checkSubmittedCsrfToken);
+		before("new", 			SecurityFilters.isAuthenticated);
 		get("/new", 			ApartmentController.newForm);
 		
-//		before("", 				SecurityFilters.checkSubmittedCsrfToken);
-		before("", 				SecurityFilters.isAuthenticated);
+		before("", 				SecurityFilters.isAuthenticated);		
 		post("", 				ApartmentController.create);
 		
+		before("mine", 			SecurityFilters.isAuthenticated);		
 		get("/mine",    		ApartmentController.index);	
+		
 		get("/:id", 			ApartmentController.details);
 		
-//		before("/:id/like", 	SecurityFilters.checkSubmittedCsrfToken);
-		before("/:id/like", 	SecurityFilters.isAuthenticated);
-		post("/:id/like", 		LikeController.create);
+//		before("/:id/likes", 	SecurityFilters.checkSubmittedCsrfToken);
+		before("/:id/likes", 	SecurityFilters.isAuthenticated);
+		post("/:id/likes", 		LikeController.create);
 		
 //		before("/:id/deactivations", SecurityFilters.checkSubmittedCsrfToken);
 		before("/:id/deactivations", SecurityFilters.isAuthenticated);

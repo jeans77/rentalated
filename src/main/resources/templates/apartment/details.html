@@ -1,64 +1,75 @@
 <!doctype html>
 <html>
-
 	<head>
 	<meta charset="UTF-8">
-		<title>Your Next Home Details(apartment/details)</title>
-	</head>
-	
+		<title>Your Next Home(apartment/details)</title>
+	</head>	
 	<body>
 -------> This is apartment/details
 
-{{> /common/_navigation }}
+{{> ../common/_navigation }}
 	
-	<h1>Only ${{ apartment.rent }}</h1>
-	<p>
-		{{ apartment.address }}, {{ apartment.city }}, {{ apartment.state }} {{ apartment.zipCode }}
-	</p>
-	<dl>
-  		<dt># of Bedrooms</dt>
-  		<dd>{{ apartment.numberOfBedrooms }}</dd>
-  		<dt># of Bathrooms</dt>
-		<dd>{{ apartment.numberOfBathrooms }}</dd>
-  		<dt>SQ Footage</dt>
-  		<dd>{{ apartment.squareFootage }}</dd>
-  	</dl>
 	
-	<#if !currentUser??>
-		<a href="/login?returnPath=/apartments/${apartment.id}">Login to LIKE this apartment</a>
-	<#elseif apartment.user != currentUser && numberOfCurrentUserLikes == 0>
-		<form method="post" action="/apartments/${apartment.id}/like">
-			<button>Like this apartment</button>
-			<input type="hidden" name="csrf" value="${csrf_token}">
+	<h1>Rent this Apartment for Only ${{ apartment.rent }}</h1>
+	
+
+	
+	{{#currentIsCreated}}
+		{{#isActive}}
+			<form method="post" action="/apartments/{{ id }}/deactivations">
+<!--		form method="post" action="/apartments/{{ apartment.id }}/deactivations"> -->	
+<!--		<form method="post" action="/apartments/${apartment.id}/deactivations"> 	-->				
+				<input type="hidden" name="activationStatus" value="false">
+				<input type="hidden" name="csrf" value="${csrf_token}">
+				<button>Deactivate listing</button>
+			</form>			
+		{{/isActive}}
+	
+		{{^isActive}}
+			<form method="post" action="/apartments/{{ id }}/activations">
+<!--		<form method="post" action="/apartments/{{ apartment.id }}/activations">	-->
+<!--  		<form method="post" action="/apartments/${apartment.id}/activations"> 		-->		
+				<input type="hidden" name="activationStatus" value="true">
+				<button>Activate listing</button>				
+				<input type="hidden" name="csrf" value="${csrf_token}">
+			</form>	
+		{{/isActive}}
+	
+		<h2>Likes</h2>
+			<p>Number: {{ likedBy.size }}</p>
+			<p>Liked By: {{#likedBy}} {{ firstName }} {{ lastName}} {{/likedBy}}</p>
+					
+	{{/currentIsCreated}}
+		<form method="post" action="/apartments/{{ id }}/likes">
+			{{^likedBy}}
+			{{#currentUser}}
+				{{^currentIsCreated}}	
+					<button>Like this apartment</button>
+				{{/currentIsCreated}}
+			{{/currentUser}}
+			{{/likedBy}}
 		</form>
-	<#elseif apartment.user != currentUser>
-			<p>Likes: ${numberOfLikes}</p>
-	<#else>
-			<p>Likes:</p>
-	<#if numberOfLikes != 0>
-		<ul>
-			<#list usersThatLikedApartment as liker>
-				<li>${liker.lastName}, ${liker.firstName}</li>
-			</#list>
-		</ul>
-	<#else>
-		<p>None :(</p>
-		</#if>
-	</#if>
 		
-	<#if apartment.user == currentUser && apartment.isActive>
-		<form method="post" action="/apartments/${apartment.id}/deactivations">
-			<input type="hidden" name="activationStatus" value="false">
-				<button>Deativate listing</button>
-			<input type="hidden" name="csrf" value="${csrf_token}">
-		</form>
-	<#elseif apartment.user == currentUser>
-		<form method="post" action="/apartments/${apartment.id}/activations">
-			<input type="hidden" name="activationStatus" value="true">
-				<button>Activate listing</button>
-			<input type="hidden" name="csrf" value="${csrf_token}">
-		</form>
-	</#if>
+		{{#noUser}}
+			<a href="/login?returnPath=/apartments/{{ apartment.id }}">Login to LIKE this apartment</a>
+<!-- 		<a href="/login?returnPath=/apartments/${apartment.id}">Login to LIKE this apartment</a>  -->
+<!-- 		<a href="/login?returnPath=/apartments/{{ id }}">Login to LIKE this apartment</a> 	-->
+		{{/noUser}}
+	
+	<h2>Details</h2>
+		<p>
+			{{ apartment.address }}, {{ apartment.city }}, {{ apartment.state }} {{ apartment.zipCode }}
+		</p>
+	
+		<dl>
+  			<dt>Nbr_Of_Bedrooms</dt>
+  			<dd>{{ apartment.numberOfBedrooms }}</dd>
+  			<dt>Nbr_Of_Bathrooms</dt>
+			<dd>{{ apartment.numberOfBathrooms }}</dd>
+  			<dt>SQ_Footage</dt>
+  			<dd>{{ apartment.squareFootage }}</dd>
+  		</dl>
 	
 	</body>
+	
 </html>

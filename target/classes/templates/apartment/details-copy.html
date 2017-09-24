@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+	<head>
+	<meta charset="UTF-8">
+		<title>Your Next Home(apartment/details)</title>
+	</head>	
+	<body>
+-------> This is apartment/details
+
+{{> ../common/_navigation }}
+	
+	<h1>Apartment Details</h1>
+	<h2>Only ${{ apartment.rent }}</h2>
+	
+	{{#owner}}
+		{{#apartment.myInactiveListings}}
+			<form method="post" action="/apartments/{{ apartment.id }}/activations">
+<!--  			<form method="post" action="/apartments/${apartment.id}/activations"> 	-->
+			<input type="hidden" name="activationStatus" value="true">
+				<button>Activate listing</button>				
+			<input type="hidden" name="csrf" value="${csrf_token}">
+			</form>
+		{{/apartment.myInactiveListings}}
+		
+		{{#apartment.myActiveListings}}
+			<form method="post" action="/apartments/{{ apartment.id }}/deactivations">
+<!--			<form method="post" action="/apartments/${apartment.id}/deactivations"> -->
+			<input type="hidden" name="activationStatus" value="false">
+			<input type="hidden" name="csrf" value="${csrf_token}">
+				<button>Deactivate listing</button>
+			</form>
+					
+		{{/apartment.myActiveListings}}
+		
+		<h3>People Who Like This Apartment:</h3>
+		
+		<p>Likes: ${numberOfLikes}</p>
+		
+		{{#listLikers}}
+			<ul>
+				<li>
+					${liker.lastName}, ${liker.firstName}
+					{{lastName}}, {{firstName}}
+				</li>
+			</ul>
+
+		{{/listLikers}}
+			
+	{{/owner}}
+	
+	{{#currentUser}}
+	
+		{{^owner}}
+			{{^list}}
+				<form method="post" action="/apartments/{{ apartment.id }}/like">
+					<button>Like this apartment</button>
+					<input type="hidden" name="csrf" value="${csrf_token}">
+				</form>
+					
+			{{/list}}
+		{{/owner}}
+		
+	{{/currentUser}}
+
+	{{#noUser}}
+		<a href="/login?returnPath=/apartments/{{ apartment.id }}">Login to LIKE this apartment</a>
+<!-- 	<a href="/login?returnPath=/apartments/${apartment.id}">Login to LIKE this apartment</a>  -->
+<!-- 	<a href="/login?returnPath=/apartments/{{ id }}">Login to LIKE this apartment</a> 	-->
+	{{/noUser}}
+	
+	<p>
+		{{ apartment.address }}, {{ apartment.city }}, {{ apartment.state }} {{ apartment.zipCode }}
+	</p>
+	
+	<dl>
+  		<dt>Nbr_Of_Bedrooms</dt>
+  		<dd>{{ apartment.numberOfBedrooms }}</dd>
+  		<dt>Nbr_Of_Bathrooms</dt>
+		<dd>{{ apartment.numberOfBathrooms }}</dd>
+  		<dt>SQ_Footage</dt>
+  		<dd>{{ apartment.squareFootage }}</dd>
+  	</dl>
+	
+	</body>
+	
+</html>
