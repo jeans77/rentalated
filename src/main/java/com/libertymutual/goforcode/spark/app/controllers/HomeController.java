@@ -22,16 +22,17 @@ public class HomeController {
 		List<Apartment> apartments = Apartment.findAll();
 		Map<String, Object> model = new HashMap<String, Object>();
 		model.put("apartments", apartments);
+		model.put("message", req.session().attribute("message"));
 		model.put("currentUser", req.session().attribute("currentUser"));
 		model.put("noUser", req.session().attribute("currentUser") == null);
-		System.out.println("Current : " + (req.session().attribute("currentUser")));
-		System.out.println("noUser  : " + (req.session().attribute("currentUser") == null));
+		System.out.println("HOMEIndex Current : " + (req.session().attribute("currentUser")));
+		System.out.println("homeIndex noUser  : " + (req.session().attribute("currentUser") == null));
 		return MustacheRenderer.getInstance().render("home/index.html", model);
 		
 		}
 	};
 	
-	public static final Route index2 = (Request req, Response res) -> {
+	public static final Route myindex = (Request req, Response res) -> {
 
 		try (AutoCloseableDb db = new AutoCloseableDb()){
 	
@@ -40,8 +41,8 @@ public class HomeController {
 		model.put("apartments", apartments);
 		model.put("currentUser", req.session().attribute("currentUser"));
 		model.put("noUser", req.session().attribute("currentUser") == null);
-		System.out.println("Current : " + (req.session().attribute("currentUser")));
-		System.out.println("noUser  : " + (req.session().attribute("currentUser") == null));
+		System.out.println("Homeindex2 Current : " + (req.session().attribute("currentUser")));
+		System.out.println("Homeindex2 noUser  : " + (req.session().attribute("currentUser") == null));
 		return MustacheRenderer.getInstance().render("home/index.html", model);
 		
 		}

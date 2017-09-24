@@ -1,19 +1,16 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-	<head>
-	<meta charset="UTF-8">
-		<title>Your Next Home(apartment/details)</title>
-	</head>	
-	<body>
--------> This is apartment/details
+<head>
+<meta charset="UTF-8">
+	<title>Your Next Home</title>
+</head>	
+
+<body>
 
 {{> ../common/_navigation }}
 	
-	
-	<h1>Rent this Apartment for Only ${{ apartment.rent }}</h1>
-	
+	<h1>Only ${{ apartment.rent }}</h1>
 
-	
 	{{#currentIsCreated}}
 		{{#isActive}}
 			<form method="post" action="/apartments/{{ id }}/deactivations">

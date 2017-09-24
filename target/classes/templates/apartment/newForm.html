@@ -2,26 +2,23 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Create New Apartment(apartment/newForm)</title>
+	<title>Create A New Listing</title>
 </head>
 <body>
--------> This is apartment/newForm
+
 {{> ../common/_navigation }}
 
 <form method="post" action="/apartments">
-
-  	<input type="number" name="rent" placeholder="Rent" required><br>
-    <input type="number" name="number_of_bedrooms" required placeholder="Bedrooms"><br>
-    <input type="number" name="number_of_bathrooms" required placeholder="Bathrooms"><br>
-    <input type="number" name="square_footage" required placeholder="Footage"><br>
-    <input type="text" name="address" required placeholder="Street address"><br>
-    <input type="text" name="city" required placeholder="City"><br>
-    <input type="text" name="state" required placeholder="State"><br>
-    <input type="text" name="zip_code" required placeholder="ZIP Code"><br>
-  <button>Add Listing</button>
-  
+  <input type="number" name="rent" placeholder="Rent" required><br>
+  <input type="number" name="number_of_bedrooms" required placeholder="Bedrooms"><br>
+  <input type="number" name="number_of_bathrooms" required placeholder="Bathrooms"><br>
+  <input type="number" name="square_footage" required placeholder="Footage"><br>
+  <input type="text" name="address" required placeholder="Street address"><br>
+  <input type="text" name="city" required placeholder="City"><br>
+  <input type="text" name="state" required placeholder="State"><br>
+  <input type="text" name="zip_code" required placeholder="ZIP Code"><br>
+  <button>Add listing</button>
 </form>
-
 
 </body>
 </html>

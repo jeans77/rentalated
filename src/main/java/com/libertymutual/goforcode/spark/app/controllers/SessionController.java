@@ -27,13 +27,17 @@ public class SessionController {
 		String StringCSRF = thisCSRF.toString();
 		res.cookie("thisCSRF", StringCSRF);
 		MustacheRenderer.getInstance();
+		System.out.println("SessionNewForm Current : " + (req.session().attribute("currentUser")));
+		System.out.println("SessionNewForm noUser  : " + (req.session().attribute("currentUser") == null));
 		return MustacheRenderer.getInstance().render("session/newForm.html", model);
 	};
 
 	public static final Route create = (Request req, Response res) -> {
 		String email = req.queryParams("email");
 		String password = req.queryParams("password");
-		
+		System.out.println("SessionCreate Current : " + (req.session().attribute("currentUser")));
+		System.out.println("SessionCreate noUser  : " + (req.session().attribute("currentUser") == null));
+
 		try (AutoCloseableDb db = new AutoCloseableDb()) {
 
 			User user = User.findFirst("email = ?", email);

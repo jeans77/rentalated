@@ -21,7 +21,8 @@ public class ApartmentController {
 		String idAsString = req.params("id");
 		int id = Integer.parseInt(idAsString);
 		Boolean currentIsCreated = false;
-		
+		System.out.println("AptDetails User : " + (req.session().attribute("currentUser")));
+		System.out.println("AptDetails noUser  : " + (req.session().attribute("currentUser") == null));
 		try (AutoCloseableDb db = new AutoCloseableDb()){
 //		Apartment apartment = Apartment.findById(Integer.parseInt(req.params("id")));
 		Apartment apartment = Apartment.findById(id);
@@ -93,6 +94,10 @@ public class ApartmentController {
 		Map<String, Object> model = new HashMap<String, Object>();
 		model.put("currentUser", req.session().attribute("currentUser"));
 		model.put("noUser", req.session().attribute("currentUser") == null);
+		
+		System.out.println("AptNewForm User : " + (req.session().attribute("currentUser")));
+		System.out.println("AptNewForm noUser  : " + (req.session().attribute("currentUser") == null));
+		
 		return MustacheRenderer.getInstance().render("apartment/newForm.html", model);
 	};
 
@@ -141,7 +146,9 @@ public class ApartmentController {
 //	};
 
 	public static final Route index = (Request req, Response res) -> {
-		
+		System.out.println("AptIndex User : " + (req.session().attribute("currentUser")));
+		System.out.println("AptIndex noUser  : " + (req.session().attribute("currentUser") == null));
+
 
 		long id = -1;
 		
@@ -172,6 +179,9 @@ public class ApartmentController {
 	};
 	
 	public static final Route like = (Request req,Response res)->{
+		System.out.println("AptLike User : " + (req.session().attribute("currentUser")));
+		System.out.println("AptLike noUser  : " + (req.session().attribute("currentUser") == null));
+
 		String idAsString=req.params("id");
 		int id=Integer.parseInt(idAsString);
 		try (AutoCloseableDb db = new AutoCloseableDb()) {
@@ -187,6 +197,8 @@ public class ApartmentController {
 	};
 
 	public static Route deactivate = (Request req, Response res) -> {
+		System.out.println("AptDeact User : " + (req.session().attribute("currentUser")));
+		System.out.println("AptDeact noUser  : " + (req.session().attribute("currentUser") == null));
 
 		try (AutoCloseableDb db = new AutoCloseableDb()) {
 		String idAsString=req.params("id");

@@ -18,7 +18,7 @@ public class Application {
 
 	public static void main(String[] args) {
 		SeedApp.create();
-		get("/", HomeController.index2);
+		get("/", HomeController.myindex);
 		
 //		before("/*", 			SecurityFilters.checkIfSessionIsNew);
 //		get("/", 				HomeController.index);
@@ -28,7 +28,7 @@ public class Application {
 		post("/logout", 		SessionController.destroy);
 		
 	path("/users", () -> {
-		get("/signup",			UserController.newForm);
+//		get("/signup",			UserController.newForm);
 		get("/new", 			UserController.newForm);
 //		before("new", 			SecurityFilters.checkSubmittedCsrfToken);
 		post("/new", 			UserController.create);
