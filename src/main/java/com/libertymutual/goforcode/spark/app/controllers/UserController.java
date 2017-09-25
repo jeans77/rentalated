@@ -14,6 +14,7 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 
+
 public class UserController {
 	
 	public static final Route newForm = (Request req, Response res) -> {
@@ -22,28 +23,26 @@ public class UserController {
 		model.put("noUser", req.session().attribute("currentUser") == null);
 		System.out.println("UsernewForm Current : " + (req.session().attribute("currentUser")));
 		System.out.println("UsernewForm noUser  : " + (req.session().attribute("currentUser") == null));
-		return MustacheRenderer.getInstance().render("users/newForm.html", null);
+		return MustacheRenderer.getInstance().render("session/signup.html", model);
 	};
 	
-	public static Route create = (Request req, Response res) -> {
-
-		String password = BCrypt.hashpw(req.queryParams("password"), BCrypt.gensalt());
-		String email = req.queryParams("email");
-		String firstName = req.queryParams("first_name");
-		String lastName = req.queryParams("last_name");
+	public static final Route create = (Request req, Response res) -> {
+		String encryptedPassword = BCrypt.hashpw(req.queryParams("password"), BCrypt.gensalt());
 		System.out.println("UserCreate Current : " + (req.session().attribute("currentUser")));
 		System.out.println("UserCreate noUser  : " + (req.session().attribute("currentUser") == null));
-		User user  = new User (email, password, firstName, lastName);
-		System.out.println("User: " + user);
-		if (user != null) {
+		User user = new User(
+				req.queryParams("email"),
+				encryptedPassword,
+				req.queryParams("first_name"),
+				req.queryParams("last_name")
+				);
+
 			try (AutoCloseableDb db = new AutoCloseableDb()) {
-				user.saveIt();
-				req.session().attribute("currentUser", user);
-				req.session().attribute("pwMessage", " ");
-			}
+			user.saveIt();
+			req.session().attribute("currentUser", user);
+			req.session().attribute("pwMessage", " ");
+			res.redirect("/");
+			return "";
 		}
-		res.redirect("/");
-		return "";
 	};
-	
 }

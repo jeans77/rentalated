@@ -6,10 +6,10 @@
 		<a href="/login">Login</a>
 		<a href="/users/new">Sign up</a>
 		<br>
-		<br>{{#message}}
+		{{#message}}
 			{{ message }} 
-			{{/message}}
-		<p>This is the NoUser</p>
+		{{/message}}
+
 {{/noUser}}	
    	
    	
@@ -19,9 +19,9 @@
       	Welcome, {{ currentUser.firstName }} ({{ currentUser.email }})
       	<br>
 		<br>
-		<a href="/apartments/mine">Your listings</a>
+		<a href="/apartments/mine">Your Listings</a>
 		<br>
-		<a href="/apartments/new">Add a listing</a>
+		<a href="/apartments/new">Add A Listing</a>
 		<br>
 		<form action="/logout" method="post">
       		<br>

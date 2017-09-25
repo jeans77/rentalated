@@ -18,25 +18,20 @@ public class Application {
 
 	public static void main(String[] args) {
 		SeedApp.create();
-		get("/", HomeController.myindex);
+		get("/", HomeController.index);
 		
-//		before("/*", 			SecurityFilters.checkIfSessionIsNew);
-//		get("/", 				HomeController.index);
+
 		get("/login",			SessionController.newForm);
-//		before("/login", 		SecurityFilters.checkSubmittedCsrfToken);
 		post("/login",			SessionController.create);
 		post("/logout", 		SessionController.destroy);
 		
 	path("/users", () -> {
-//		get("/signup",			UserController.newForm);
 		get("/new", 			UserController.newForm);
-//		before("new", 			SecurityFilters.checkSubmittedCsrfToken);
 		post("/new", 			UserController.create);
 	});
 		
 	path("/apartments", () -> {
 		
-//		before("new", 			SecurityFilters.checkSubmittedCsrfToken);
 		before("new", 			SecurityFilters.isAuthenticated);
 		get("/new", 			ApartmentController.newForm);
 		
@@ -48,11 +43,11 @@ public class Application {
 		
 		get("/:id", 			ApartmentController.details);
 		
-//		before("/:id/likes", 	SecurityFilters.checkSubmittedCsrfToken);
+
 		before("/:id/likes", 	SecurityFilters.isAuthenticated);
 		post("/:id/likes", 		LikeController.create);
 		
-//		before("/:id/deactivations", SecurityFilters.checkSubmittedCsrfToken);
+
 		before("/:id/deactivations", SecurityFilters.isAuthenticated);
 		post("/:id/deactivations", 	ActivateController.update);
 		
@@ -64,11 +59,9 @@ public class Application {
 		
 	path("/api", () -> {
 		get("/apartments/:id", 		ApartmentApiController.details);
-//		before("/apartments", 		SecurityFilters.checkSubmittedCsrfToken);
 //		before("/apartments", 		SecurityFilters.isAuthenticated);
 		post("/apartments", 		ApartmentApiController.create);
 		get("/users/:id", 			UserApiController.details);
-//		before("/apartments", 		SecurityFilters.checkSubmittedCsrfToken);
 		post("/users", 				UserApiController.create);
 	});
 	
