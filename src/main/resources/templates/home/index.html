@@ -16,9 +16,11 @@
 <br>
 
 {{#apartments}}
+	{{#isActive}}
 	<div>
 		<a href="/apartments/{{ id }}">{{ address }}</a>
 	</div>
+	{{/isActive}}
 {{/apartments}}
 		
 </body>

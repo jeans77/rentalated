@@ -35,10 +35,10 @@ public class Application {
 		
 	path("/apartments", () -> {
 		
-		before("new", 			SecurityFilters.isAuthenticated);
+		before("/new", 			SecurityFilters.isAuthenticated);
 		get("/new", 			ApartmentController.newForm);
 		
-		before("mine", 			SecurityFilters.isAuthenticated);		
+		before("/mine", 			SecurityFilters.isAuthenticated);		
 		get("/mine",    		ApartmentController.index);	
 		
 		get("/:id", 			ApartmentController.details);
