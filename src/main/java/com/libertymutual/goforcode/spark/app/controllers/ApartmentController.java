@@ -172,6 +172,8 @@ public class ApartmentController {
 			
 			model.put("myActiveListings", myActiveListings);
 			model.put("myInactiveListings", myInactiveListings);
+			model.put("currentUser",req.session().attribute("currentUser"));
+			model.put("noUser",req.session().attribute("currentUser")==null);
 			return MustacheRenderer.getInstance().render("apartment/usersListings.html", model);
 
 		}

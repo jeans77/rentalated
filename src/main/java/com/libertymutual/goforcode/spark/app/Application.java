@@ -2,6 +2,8 @@ package com.libertymutual.goforcode.spark.app;
 
 import static spark.Spark.*;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import com.libertymutual.goforcode.spark.app.controllers.ActivateController;
 import com.libertymutual.goforcode.spark.app.controllers.ApartmentApiController;
 import com.libertymutual.goforcode.spark.app.controllers.ApartmentController;
@@ -17,43 +19,41 @@ import com.libertymutual.goforcode.spark.app.utilities.SeedApp;
 public class Application {
 
 	public static void main(String[] args) {
-		SeedApp.create();
-		get("/", HomeController.index);
 		
+		SeedApp.create();
+		
+		get("/", HomeController.index);
 
 		get("/login",			SessionController.newForm);
 		post("/login",			SessionController.create);
 		post("/logout", 		SessionController.destroy);
 		
-	path("/users", () -> {
-		get("/new", 			UserController.newForm);
-		post("/new", 			UserController.create);
-	});
+	
+		get("/users/new", 		UserController.newForm);
+		post("users/new", 		UserController.create);
+
 		
 	path("/apartments", () -> {
 		
 		before("new", 			SecurityFilters.isAuthenticated);
 		get("/new", 			ApartmentController.newForm);
 		
-		before("", 				SecurityFilters.isAuthenticated);		
-		post("", 				ApartmentController.create);
-		
 		before("mine", 			SecurityFilters.isAuthenticated);		
 		get("/mine",    		ApartmentController.index);	
 		
 		get("/:id", 			ApartmentController.details);
 		
-
 		before("/:id/likes", 	SecurityFilters.isAuthenticated);
 		post("/:id/likes", 		LikeController.create);
 		
-
 		before("/:id/deactivations", SecurityFilters.isAuthenticated);
 		post("/:id/deactivations", 	ActivateController.update);
 		
-//		before("/:id/activations", 	SecurityFilters.checkSubmittedCsrfToken);
 		before("/:id/activations", 	SecurityFilters.isAuthenticated);
 		post("/:id/activations", 	ActivateController.update);
+		
+		before("", 				SecurityFilters.isAuthenticated);		
+		post("", 				ApartmentController.create);
 
 	});	
 		

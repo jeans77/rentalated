@@ -20,12 +20,6 @@ public class SecurityFilters {
 		}	
 	};
 
-	public static final Filter checkIfSessionIsNew = (Request req, Response res) -> {
-		if (req.session().isNew()) {
-			String uuid = UUID.randomUUID().toString();
-			req.session().attribute("csrf_token", uuid);
-		}
-	};
 		
 	private static UUID newCSRF() {
 		UUID newCSRF = UUID.randomUUID();
