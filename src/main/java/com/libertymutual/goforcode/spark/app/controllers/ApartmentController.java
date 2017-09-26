@@ -16,7 +16,7 @@ import spark.Response;
 import spark.Route;
 
 public class ApartmentController {
-
+	
 	public static final Route details = (Request req, Response res) -> {
 		String idAsString = req.params("id");
 		int id = Integer.parseInt(idAsString);
@@ -145,6 +145,11 @@ public class ApartmentController {
 //			return "";
 //	};
 
+//			public static final Route details = (Request req, Response res) -> {
+//			try (AutoCloseableDb db = new AutoCloseableDb()){
+//				LazyList<Apartment> apartments = 
+//			}
+			
 	public static final Route index = (Request req, Response res) -> {
 		System.out.println("AptIndex User : " + (req.session().attribute("currentUser")));
 		System.out.println("AptIndex noUser  : " + (req.session().attribute("currentUser") == null));
