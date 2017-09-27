@@ -9,6 +9,7 @@ import com.libertymutual.goforcode.spark.app.controllers.ApartmentApiController;
 import com.libertymutual.goforcode.spark.app.controllers.ApartmentController;
 import com.libertymutual.goforcode.spark.app.controllers.HomeController;
 import com.libertymutual.goforcode.spark.app.controllers.LikeController;
+import com.libertymutual.goforcode.spark.app.controllers.SessionApiController;
 import com.libertymutual.goforcode.spark.app.controllers.SessionController;
 import com.libertymutual.goforcode.spark.app.controllers.UserApiController;
 import com.libertymutual.goforcode.spark.app.controllers.UserController;
@@ -22,7 +23,7 @@ public class Application {
 	
 	public static void main(String[] args) {
 		
-		enableCORS("*", "*", "*");
+		enableCORS("http://localhost:4200", "*", "*");
 		
 		
 		SeedApp.create();
@@ -66,9 +67,12 @@ public class Application {
 		get("/apartments/:id", 		ApartmentApiController.details);
 //		before("/apartments", 		SecurityFilters.isAuthenticated);
 		post("/apartments", 		ApartmentApiController.create);
-		get("/apartments", 		ApartmentApiController.index);
+		get("/apartments", 			ApartmentApiController.index);
 		get("/users/:id", 			UserApiController.details);
 		post("/users", 				UserApiController.create);
+		post("/sessions", 			SessionApiController.create);
+		delete("/sessions/mine",	SessionApiController.destroy);
+
 	});
 	
 	}
@@ -94,6 +98,7 @@ public class Application {
 	        response.header("Access-Control-Allow-Origin", origin);
 	        response.header("Access-Control-Request-Method", methods);
 	        response.header("Access-Control-Allow-Headers", headers);
+	        response.header("Access-Control-Allow-Credentials", "true");
 	        // Note: this may or may not be necessary in your particular application
 //	        response.type("application/json");
 	    });
