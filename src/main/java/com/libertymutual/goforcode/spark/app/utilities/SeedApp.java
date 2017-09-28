@@ -23,6 +23,10 @@ public class SeedApp {
 		Apartment apartment = new Apartment(600, 4, 4.0, 600, "444 Main Str4", "San Francisco", "CA", 95104, true);
 				user.add(apartment);
 				apartment.saveIt();
+				
+				apartment = new Apartment(700, 5, 5.0, 700, "555 Main Str5", "San Francisco", "CA", 95105, true);
+				user.add(apartment);
+				apartment.saveIt();
 
 		
 		user = new User("jean@lm.com", encrytedPassword, "Jean", "S");

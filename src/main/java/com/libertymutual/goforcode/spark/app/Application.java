@@ -64,10 +64,12 @@ public class Application {
 	});	
 		
 	path("/api", () -> {
+		get("/apartments/mine",		ApartmentApiController.myindex);
 		get("/apartments/:id", 		ApartmentApiController.details);
 //		before("/apartments", 		SecurityFilters.isAuthenticated);
 		post("/apartments", 		ApartmentApiController.create);
 		get("/apartments", 			ApartmentApiController.index);
+
 		get("/users/:id", 			UserApiController.details);
 		post("/users", 				UserApiController.create);
 		post("/sessions", 			SessionApiController.create);
