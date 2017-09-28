@@ -4,7 +4,6 @@ import static spark.Spark.*;
 
 import org.mindrot.jbcrypt.BCrypt;
 
-import com.libertymutual.goforcode.spark.app.controllers.ActivateController;
 import com.libertymutual.goforcode.spark.app.controllers.ApartmentApiController;
 import com.libertymutual.goforcode.spark.app.controllers.ApartmentController;
 import com.libertymutual.goforcode.spark.app.controllers.HomeController;
@@ -53,10 +52,12 @@ public class Application {
 		post("/:id/likes", 		LikeController.create);
 		
 		before("/:id/deactivations", SecurityFilters.isAuthenticated);
-		post("/:id/deactivations", 	ActivateController.update);
+//		post("/:id/deactivations", 	ActivateController.update);
+		post("/:id/deactivations", 	ApartmentController.deactivate);
 		
 		before("/:id/activations", 	SecurityFilters.isAuthenticated);
-		post("/:id/activations", 	ActivateController.update);
+//		post("/:id/activations", 	ActivateController.update);
+		post("/:id/activations", 	ApartmentController.activate);
 		
 		before("", 				SecurityFilters.isAuthenticated);		
 		post("", 				ApartmentController.create);
@@ -69,6 +70,8 @@ public class Application {
 //		before("/apartments", 		SecurityFilters.isAuthenticated);
 		post("/apartments", 		ApartmentApiController.create);
 		get("/apartments", 			ApartmentApiController.index);
+		post("/apartments/:id/activations", ApartmentApiController.activate);
+		post("/apartments/:id/deactivations", ApartmentApiController.deactivate);
 
 		get("/users/:id", 			UserApiController.details);
 		post("/users", 				UserApiController.create);

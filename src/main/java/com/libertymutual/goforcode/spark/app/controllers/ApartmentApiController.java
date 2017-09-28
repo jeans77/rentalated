@@ -1,6 +1,8 @@
 package com.libertymutual.goforcode.spark.app.controllers;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.javalite.activejdbc.LazyList;
 
@@ -53,5 +55,35 @@ public class ApartmentApiController {
 		return myListings.toJson(true);
 
 		}
+	};
+
+	public static Route activate = (Request req, Response res) -> {
+		System.out.println("Id activate: " + req.params("id"));
+		try (AutoCloseableDb db = new AutoCloseableDb()) {
+			String idAsString = req.params("id");
+			int id = Integer.parseInt(idAsString);
+			Apartment apartment = Apartment.findById(id);
+			apartment.set("is_active", true);
+			apartment.saveIt();
+//			res.status(201);
+//			res.redirect("/apartment/" + id);
+			res.header("Content-Type", "application/json");
+			return apartment.toJson(true);
+		}
+	};
+	
+	public static Route deactivate = (Request req, Response res) -> {
+		System.out.println("Id: deactivate" + req.params("id"));
+		try (AutoCloseableDb db = new AutoCloseableDb()) {
+			String idAsString = req.params("id");
+			int id = Integer.parseInt(idAsString);
+			Apartment apartment = Apartment.findById(id);
+			apartment.set("is_active", false);
+			apartment.saveIt();
+//			res.status(201);
+			res.header("Content-Type", "application/json");
+			return apartment.toJson(true);
+		}
+		
 	};
 }
